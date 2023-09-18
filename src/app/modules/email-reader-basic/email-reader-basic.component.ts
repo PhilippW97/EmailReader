@@ -13,17 +13,23 @@ export class EmailReaderBasicComponent implements OnInit {
 
   ngOnInit(): void {
     this.mail = {
-      from: 'example@example.de',
-      to: 'example@example.de',
-      subject: 'example',
-      body: 'example',
+      from: '',
+      to: '',
+      subject: '',
+      body: '',
     };
   }
 
   send(): void {
     console.log('send button pressed');
     window.alert(
-      this.mail.from + this.mail.to + this.mail.subject + this.mail.body
+      this.mail.from +
+        ' ' +
+        this.mail.to +
+        ' ' +
+        this.mail.subject +
+        ' ' +
+        this.mail.body
     );
     this.mail = {
       from: '',
