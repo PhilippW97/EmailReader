@@ -1,0 +1,62 @@
+<form>
+  <div class="form-group">
+    <label for="from">From</label>
+    <input
+      [(ngModel)]="mail.from"
+      type="email"
+      class="form-control"
+      id="from"
+      aria-describedby="emailHelp"
+      placeholder="Enter email from sender"
+    />
+    <small id="emailHelp" class="form-text text-muted"
+      >We'll never share your email with anyone else.</small
+    >
+  </div>
+  <div class="form-group">
+    <label for="to">To</label>
+    <input
+      [(ngModel)]="mail.to"
+      type="email"
+      class="form-control"
+      id="to"
+      placeholder="Enter email from receipient"
+    />
+  </div>
+  <div class="form-group">
+    <label for="subject">Subject</label>
+    <input
+      [(ngModel)]="mail.subject"
+      type="input"
+      class="form-control"
+      id="subject"
+      placeholder="Enter subject"
+    />
+  </div>
+  <div class="form-group">
+    <label for="body">Body</label>
+    <input
+      [(ngModel)]="mail.body"
+      type="input"
+      class="form-control"
+      id="body"
+      placeholder="Enter body"
+    />
+  </div>
+  <div>
+    <button id="send" type="submit" class="btn btn-primary" (click)="send()">
+      Send
+    </button>
+    <button id="clean" type="submit" class="btn btn-primary" (click)="clean()">
+      Clean
+    </button>
+  </div>
+  <!-- up-to-date viewer -->
+  <h1>hier befindet sich der up-to-date viewer</h1>
+  <div>
+    <p>From: {{ mail.from }}</p>
+    <p>To: {{ mail.to }}</p>
+    <p>Subject: {{ mail.subject }}</p>
+    <p>Body: {{ mail.body }}</p>
+  </div>
+</form>
