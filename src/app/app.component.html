@@ -42,7 +42,7 @@
       </g>
     </svg>
 
-    <span>{{ title }} app is running!</span>
+    <span>{{ title }}</span>
 
     <svg
       id="rocket-smoke"
@@ -61,5 +61,15 @@
       />
     </svg>
   </div>
-  <app-email-reader-basic />
+  <router-outlet class="m-4">
+    <button class="btn btn-outline-primary">
+      <a routerLink="/">HOME</a>
+    </button>
+    <button class="btn btn-outline-primary">
+      <a routerLink="/exercise1">Exercise 1</a>
+    </button>
+    <button class="btn btn-outline-primary">
+      <a routerLink="/exercise2">Exercise 2</a>
+    </button>
+  </router-outlet>
 </div>

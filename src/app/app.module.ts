@@ -18,6 +18,10 @@ import { FormFieldHighlightDirective } from './modules/directives/form-field-hig
   ],
   imports: [BrowserModule, NgbModule, FormsModule, AppRoutingModule],
   providers: [],
-  bootstrap: [AppComponent, EmailReaderBasicComponent],
+  bootstrap: [
+    AppComponent,
+    EmailReaderBasicComponent,
+    EmailReaderFormComponent,
+  ],
 })
 export class AppModule {}

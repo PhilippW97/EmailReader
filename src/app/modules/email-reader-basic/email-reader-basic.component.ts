@@ -1,6 +1,6 @@
-import { AppComponent } from './../../app.component';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Email } from '../interfaces/email';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-email-reader-basic',
@@ -9,13 +9,8 @@ import { Email } from '../interfaces/email';
 })
 export class EmailReaderBasicComponent implements OnInit {
   mail!: Email;
-  mailList!: Email[];
 
-  @ViewChild('mailForm') mailForm: any;
-
-  constructor() {
-    this.mailList = [];
-  }
+  constructor(private router: Router) {}
 
   ngOnInit(): void {
     this.mail = {
@@ -26,28 +21,32 @@ export class EmailReaderBasicComponent implements OnInit {
     };
   }
 
-  sendForm(): void {
+  send(): void {
+    console.log('send button pressed');
     window.alert(
-      `The email from ${this.mail.from} has been sent to ${this.mail.to}`
+      this.mail.from +
+        ' ' +
+        this.mail.to +
+        ' ' +
+        this.mail.subject +
+        ' ' +
+        this.mail.body
     );
-
-    // create new mail object and add it to the mailList
-    const email: Email = {
-      from: this.mail.from,
-      to: this.mail.to,
-      subject: this.mail.subject,
-      body: this.mail.body,
+    this.mail = {
+      from: '',
+      to: '',
+      subject: '',
+      body: '',
     };
-    this.addMail(email);
-    this.mailForm.reset();
   }
 
-  cleanForm(): void {
-    this.mailForm.reset();
-  }
-
-  // Method to add an entry to the mailList
-  addMail(email: Email) {
-    this.mailList.push(email);
+  clean(): void {
+    console.log('clean button pressed');
+    this.mail = {
+      from: '',
+      to: '',
+      subject: '',
+      body: '',
+    };
   }
 }

@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { Email } from './modules/interfaces/email';
 
 @Component({
   selector: 'app-root',
@@ -7,5 +6,5 @@ import { Email } from './modules/interfaces/email';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  title = 'EmailReader';
+  title = 'Programming of User Interfaces';
 }
