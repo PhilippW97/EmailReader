@@ -1,37 +1,94 @@
-<div>
+<form #mailForm="ngForm" (ngSubmit)="sendForm()">
   <div class="form-group">
-    <label for="from">From</label>
+    <label> From</label>
     <input
+      required
       [(ngModel)]="mail.from"
       type="email"
       class="form-control"
       id="from"
-      aria-describedby="emailHelp"
       placeholder="Enter email from sender"
+      name="checkMailFrom"
+      appFormFieldHighlight
+      #checkMailFrom="ngModel"
+      [ngClass]="
+        checkMailFrom.valid || checkMailFrom.pristine
+          ? 'valid-style'
+          : 'invalid-style'
+      "
+      pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
     />
-    <small id="emailHelp" class="form-text text-muted"
-      >We'll never share your email with anyone else.</small
+    <div
+      class="alert alert-danger"
+      *ngIf="checkMailFrom.touched && !checkMailFrom.valid"
     >
+      <div *ngIf="checkMailFrom.errors && checkMailFrom.errors['required']">
+        Email is required.
+      </div>
+      <div *ngIf="checkMailFrom.errors && checkMailFrom.errors['pattern']">
+        Email does not match the required pattern.
+      </div>
+    </div>
   </div>
+
   <div class="form-group">
-    <label for="to">To</label>
+    <label> To </label>
     <input
-      [(ngModel)]="mail.to"
-      type="email"
       class="form-control"
+      type="email"
+      required
+      [(ngModel)]="mail.to"
       id="to"
-      placeholder="Enter email from receipient"
+      placeholder="Enter email from receiver"
+      name="checkMailTo"
+      appFormFieldHighlight
+      #checkMailTo="ngModel"
+      [ngClass]="
+        checkMailTo.valid || checkMailTo.pristine
+          ? 'valid-style'
+          : 'invalid-style'
+      "
+      pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
     />
+
+    <div
+      class="alert alert-danger"
+      *ngIf="checkMailTo.touched && !checkMailTo.valid"
+    >
+      <div *ngIf="checkMailTo.errors && checkMailTo.errors['required']">
+        Email is required.
+      </div>
+      <div *ngIf="checkMailTo.errors && checkMailTo.errors['pattern']">
+        Email does not match the required pattern.
+      </div>
+    </div>
   </div>
+
   <div class="form-group">
     <label for="subject">Subject</label>
     <input
       [(ngModel)]="mail.subject"
-      type="input"
+      type="text"
+      required
       class="form-control"
       id="subject"
       placeholder="Enter subject"
+      name="checkSub"
+      appFormFieldHighlight
+      #checkSub="ngModel"
+      [ngClass]="
+        checkSub.valid || checkSub.pristine ? 'valid-style' : 'invalid-style'
+      "
+      pattern=".{10,50}"
     />
+  </div>
+  <div class="alert alert-danger" *ngIf="checkSub.touched && !checkSub.valid">
+    <div *ngIf="checkSub.errors && checkSub.errors['required']">
+      Subject is required.
+    </div>
+    <div *ngIf="checkSub.errors && checkSub.errors['pattern']">
+      Subject does not match the required pattern (use 10 to 50 Chars).
+    </div>
   </div>
   <div class="form-group">
     <label for="body">Body</label>
@@ -40,23 +97,59 @@
       type="input"
       class="form-control"
       id="body"
+      name="checkBody"
+      appFormFieldHighlight
+      #checkBody="ngModel"
       placeholder="Enter body"
     />
   </div>
-  <div>
-    <button id="send" type="submit" class="btn btn-primary" (click)="send()">
+  <div class="text-right mt-4">
+    <button
+      class="btn btn-primary btn-md mr-1"
+      type="submit"
+      [disabled]="!mailForm.form.valid"
+    >
       Send
     </button>
-    <button id="clean" type="submit" class="btn btn-primary" (click)="clean()">
-      Clean
+    <button
+      class="btn btn-primary btn-md mr-1"
+      type="button"
+      (click)="cleanForm()"
+      style="margin-left: 8px"
+    >
+      Clear
     </button>
   </div>
+  <!-- Email Reader form and list -->
+  <div class="m-4 custom-bg">
+    <div *ngIf="mailList && mailList.length > 0">
+      <h3>List of Mails</h3>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>From</th>
+            <th>To</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let mail of mailList">
+            <td>{{ mail.from }}</td>
+            <td>{{ mail.to }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div *ngIf="!mailList || mailList.length === 0">
+      <h3>"The list of emails is empty"</h3>
+    </div>
+  </div>
+
   <!-- up-to-date viewer -->
-  <h1>hier befindet sich der up-to-date viewer</h1>
+  <h1>up-to-date Viewer</h1>
   <div>
     <p>From: {{ mail.from }}</p>
     <p>To: {{ mail.to }}</p>
     <p>Subject: {{ mail.subject }}</p>
     <p>Body: {{ mail.body }}</p>
   </div>
-</div>
+</form>
