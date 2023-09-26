@@ -9,6 +9,7 @@ import { Email } from '../interfaces/email';
 export class EmailReaderFormComponent implements OnInit {
   mail!: Email;
   mailList!: Email[];
+  uniqueIdCounter: number = 1;
 
   @ViewChild('mailForm') mailForm: any;
 
@@ -18,11 +19,16 @@ export class EmailReaderFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.mail = {
+      id: 0,
       from: '',
       to: '',
       subject: '',
       body: '',
     };
+  }
+
+  generateUniqueId(): number {
+    return this.uniqueIdCounter++;
   }
 
   sendForm(): void {
@@ -32,12 +38,14 @@ export class EmailReaderFormComponent implements OnInit {
 
     // create new mail object and add it to the mailList
     const email: Email = {
+      id: this.uniqueIdCounter,
       from: this.mail.from,
       to: this.mail.to,
       subject: this.mail.subject,
       body: this.mail.body,
     };
     this.addMail(email);
+    this.generateUniqueId();
     this.mailForm.reset();
   }
 
@@ -48,5 +56,10 @@ export class EmailReaderFormComponent implements OnInit {
   // Method to add an entry to the mailList
   addMail(email: Email) {
     this.mailList.push(email);
+  }
+
+  removeEmail(id: Number) {
+    console.log('remove Email presssed');
+    console.log(id);
   }
 }

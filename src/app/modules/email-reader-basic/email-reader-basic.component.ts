@@ -14,6 +14,7 @@ export class EmailReaderBasicComponent implements OnInit {
 
   ngOnInit(): void {
     this.mail = {
+      id: 0,
       from: '',
       to: '',
       subject: '',
@@ -33,6 +34,7 @@ export class EmailReaderBasicComponent implements OnInit {
         this.mail.body
     );
     this.mail = {
+      id: 0,
       from: '',
       to: '',
       subject: '',
@@ -43,6 +45,7 @@ export class EmailReaderBasicComponent implements OnInit {
   clean(): void {
     console.log('clean button pressed');
     this.mail = {
+      id: 0,
       from: '',
       to: '',
       subject: '',

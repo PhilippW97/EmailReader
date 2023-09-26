@@ -120,6 +120,27 @@
       Clear
     </button>
   </div>
+  <!-- Search Field -->
+  <div class="mt-4">
+    <input
+      type="text"
+      class="form-control"
+      id="search"
+      placeholder="Search for Emails"
+    />
+  </div>
+  <!-- Checkbox for Email with/without body -->
+  <div class="form-check">
+    <input
+      class="form-check-input"
+      type="checkbox"
+      value=""
+      id="flexCheckDefault"
+    />
+    <label class="form-check-label" for="flexCheckDefault">
+      show mails with body
+    </label>
+  </div>
   <!-- Email Reader form and list -->
   <div class="m-4 custom-bg">
     <div *ngIf="mailList && mailList.length > 0">
@@ -129,12 +150,16 @@
           <tr>
             <th>From</th>
             <th>To</th>
+            <th>Delete</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let mail of mailList">
             <td>{{ mail.from }}</td>
             <td>{{ mail.to }}</td>
+            <button class="btn btn-danger" (click)="removeEmail(mail.id)">
+              X
+            </button>
           </tr>
         </tbody>
       </table>
@@ -142,14 +167,5 @@
     <div *ngIf="!mailList || mailList.length === 0">
       <h3>"The list of emails is empty"</h3>
     </div>
-  </div>
-
-  <!-- up-to-date viewer -->
-  <h1>up-to-date Viewer</h1>
-  <div>
-    <p>From: {{ mail.from }}</p>
-    <p>To: {{ mail.to }}</p>
-    <p>Subject: {{ mail.subject }}</p>
-    <p>Body: {{ mail.body }}</p>
   </div>
 </form>
