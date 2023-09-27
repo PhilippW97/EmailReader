@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Email } from '../interfaces/email';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-email-reader-basic',
@@ -10,7 +9,7 @@ import { Router } from '@angular/router';
 export class EmailReaderBasicComponent implements OnInit {
   mail!: Email;
 
-  constructor(private router: Router) {}
+  constructor() {}
 
   ngOnInit(): void {
     this.mail = {
@@ -23,7 +22,6 @@ export class EmailReaderBasicComponent implements OnInit {
   }
 
   send(): void {
-    console.log('send button pressed');
     window.alert(
       this.mail.from +
         ' ' +
@@ -43,7 +41,6 @@ export class EmailReaderBasicComponent implements OnInit {
   }
 
   clean(): void {
-    console.log('clean button pressed');
     this.mail = {
       id: 0,
       from: '',

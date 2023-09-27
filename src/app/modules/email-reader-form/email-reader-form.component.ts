@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Email } from '../interfaces/email';
+import { EmailServiceService } from 'src/app/services/email-service.service';
 
 @Component({
   selector: 'app-email-reader-form',
@@ -9,13 +10,15 @@ import { Email } from '../interfaces/email';
 export class EmailReaderFormComponent implements OnInit {
   mail!: Email;
   mailList!: Email[];
-  uniqueIdCounter: number = 1;
+  uniqueIdCounter: number = 6;
+
+  // attributes for pipes
+  term!: string;
+  withBody!: boolean;
 
   @ViewChild('mailForm') mailForm: any;
 
-  constructor() {
-    this.mailList = [];
-  }
+  constructor(private emailService: EmailServiceService) {}
 
   ngOnInit(): void {
     this.mail = {
@@ -25,6 +28,8 @@ export class EmailReaderFormComponent implements OnInit {
       subject: '',
       body: '',
     };
+    // Access the variable from the injected service instance
+    this.mailList = this.emailService.emailsList;
   }
 
   generateUniqueId(): number {
@@ -44,7 +49,7 @@ export class EmailReaderFormComponent implements OnInit {
       subject: this.mail.subject,
       body: this.mail.body,
     };
-    this.addMail(email);
+    this.emailService.addEmail(email);
     this.generateUniqueId();
     this.mailForm.reset();
   }
@@ -53,13 +58,7 @@ export class EmailReaderFormComponent implements OnInit {
     this.mailForm.reset();
   }
 
-  // Method to add an entry to the mailList
-  addMail(email: Email) {
-    this.mailList.push(email);
-  }
-
-  removeEmail(id: Number) {
-    console.log('remove Email presssed');
-    console.log(id);
+  removeEmail(id: Number): void {
+    this.mailList = this.emailService.deleteEmail(id);
   }
 }

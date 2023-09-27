@@ -1,64 +1,77 @@
 import { Email } from './../modules/interfaces/email';
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-
-import { Observable, of } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
-
-@Injectable({
-  providedIn: 'root',
-})
-export class EmailServiceService {
-  constructor() {}
-}
+import { InMemoryDbService } from 'angular-in-memory-web-api';
 
 @Injectable({ providedIn: 'root' })
-export class StudentsService {
-  private emailsURL = 'api/emails'; // URL to web api
+export class EmailServiceService implements InMemoryDbService {
+  emailsList!: Email[];
+  uniqueIdCounter: number = 1;
 
-  httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
-  };
-
-  constructor(private http: HttpClient) {}
-
-  // This invocation captures the error and returns an empty list to
-  // the controller when something fails
-  getEmails(): Observable<Email[]> {
-    return this.http.get<Email[]>(this.emailsURL).pipe(
-      tap((res) => console.log('fetched ' + res.length + ' email')),
-      catchError(this.handleError<Email[]>('getEmail', []))
-    );
+  constructor() {
+    this.emailsList = this.createDb();
   }
 
-  // Example to show how to ignore the error in the server and gives
-  // the responsibity to the controller
-  getEmail(email: Email): Observable<Email> {
-    console.log(`Retreiving information of student: ${email.id}`);
-    const url = `${this.emailsURL}/${email.id}`;
-    return this.http.get<Email>(url);
+  generateUniqueId(): number {
+    return this.uniqueIdCounter++;
   }
 
-  deleteEmail(email: Email): Observable<Email> {
-    const id = email.id;
-    const url = `${this.emailsURL}/${id}`;
-    return this.http.delete<Email>(url, this.httpOptions);
+  // Inherited from InMemoryDbService
+  createDb(): Email[] {
+    const emails: Email[] = [
+      {
+        id: 1,
+        from: 'Student 1',
+        to: 'email1@upm.es',
+        subject: '',
+        body: '',
+      },
+      {
+        id: 2,
+        from: 'Student 2',
+        to: 'email2@upm.es',
+        subject: 'asdfasdfasdf',
+        body: 'Body1',
+      },
+      {
+        id: 3,
+        from: 'Student 3',
+        to: 'email3@upm.es',
+        subject: '',
+        body: '',
+      },
+      {
+        id: 4,
+        from: 'Student 4',
+        to: 'email4@upm.es',
+        subject: '',
+        body: '',
+      },
+      {
+        id: 5,
+        from: 'Student 5',
+        to: 'email5@upm.es',
+        subject: 'subject 123',
+        body: 'Body2',
+      },
+    ];
+    return emails;
   }
 
-  addEmail(email: Email): Observable<Email> {
-    return this.http.post<Email>(this.emailsURL, email, this.httpOptions).pipe(
-      tap((email: Email) => console.log(`added email with id=${email.id}`)),
-      catchError(this.handleError<Email>('email'))
-    );
+  getEmails(): Email[] {
+    return this.emailsList;
   }
 
-  private handleError<T>(operation = 'operation', result?: T) {
-    return (error: any): Observable<T> => {
-      console.error(`${operation} failed: ${error.message}`);
-      console.error(error); // log to console instead
+  getEmail(id: number): Email | undefined {
+    return this.emailsList.find((email) => email.id === id);
+  }
 
-      // Let the app keep running by returning an empty result.
-      return of(result as T);
-    };
+  addEmail(email: Email): void {
+    this.emailsList.push(email);
+  }
+
+  deleteEmail(id: Number): Email[] {
+    const newArray = this.emailsList.filter((email) => email.id !== id);
+    this.emailsList = newArray;
+    return newArray;
   }
 }

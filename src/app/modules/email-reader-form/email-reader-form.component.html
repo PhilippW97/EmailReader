@@ -1,4 +1,4 @@
-<form #mailForm="ngForm" (ngSubmit)="sendForm()">
+<form #mailForm="ngForm">
   <div class="form-group">
     <label> From</label>
     <input
@@ -108,6 +108,7 @@
       class="btn btn-primary btn-md mr-1"
       type="submit"
       [disabled]="!mailForm.form.valid"
+      (click)="sendForm()"
     >
       Send
     </button>
@@ -126,7 +127,9 @@
       type="text"
       class="form-control"
       id="search"
+      name="term"
       placeholder="Search for Emails"
+      [(ngModel)]="term"
     />
   </div>
   <!-- Checkbox for Email with/without body -->
@@ -136,6 +139,8 @@
       type="checkbox"
       value=""
       id="flexCheckDefault"
+      name="body"
+      [(ngModel)]="withBody"
     />
     <label class="form-check-label" for="flexCheckDefault">
       show mails with body
@@ -148,15 +153,25 @@
       <table class="table">
         <thead>
           <tr>
+            <th>ID</th>
             <th>From</th>
             <th>To</th>
+            <th>Body</th>
             <th>Delete</th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let mail of mailList">
+          <tr
+            *ngFor="
+              let mail of mailList
+                | withBodyFilter : withBody
+                | searchFilter : term
+            "
+          >
+            <td>{{ mail.id }}</td>
             <td>{{ mail.from }}</td>
             <td>{{ mail.to }}</td>
+            <td>{{ mail.body }}</td>
             <button class="btn btn-danger" (click)="removeEmail(mail.id)">
               X
             </button>
