@@ -1,0 +1,13 @@
+<h1>EmailViewer</h1>
+<button class="btn btn-primary btn-md" type="submit" [routerLink]="['..']">
+  <i class="material-icons"> arrow_back</i>
+</button>
+<div class="m-4">
+  <div *ngIf="mail">
+    <h2>Mail Details</h2>
+    <p><strong>From:</strong> {{ mail.from }}</p>
+    <p><strong>To:</strong> {{ mail.to }}</p>
+    <p><strong>Subject:</strong> {{ mail.subject }}</p>
+    <p><strong>Body:</strong> {{ mail.body }}</p>
+  </div>
+</div>

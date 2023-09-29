@@ -1,0 +1,79 @@
+<div>
+  <button
+    class="btn btn-primary btn-md"
+    type="submit"
+    [routerLink]="['/newMail']"
+  >
+    <p>EmailForm</p>
+    <i class="material-icons"> mail </i>
+  </button>
+  <div class="mt-4">
+    <input
+      type="text"
+      class="form-control"
+      id="search"
+      name="term"
+      placeholder="Search for Emails"
+      [(ngModel)]="term"
+    />
+  </div>
+  <div class="form-check">
+    <input
+      class="form-check-input"
+      type="checkbox"
+      value=""
+      id="flexCheckDefault"
+      name="body"
+      [(ngModel)]="withBody"
+    />
+    <label class="form-check-label" for="flexCheckDefault">
+      show mails with body
+    </label>
+  </div>
+</div>
+
+<!-- Email Reader form and list -->
+<h1>List of all Mails</h1>
+<div class="m-4 custom-bg">
+  <div *ngIf="mailList && mailList.length > 0">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>From</th>
+          <th>To</th>
+          <th>Body</th>
+          <th>Delete</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          *ngFor="
+            let mail of mailList
+              | withBodyFilter : withBody
+              | searchFilter : term
+          "
+        >
+          <td>{{ mail.id }}</td>
+          <td>{{ mail.from }}</td>
+          <td>{{ mail.to }}</td>
+          <td>{{ mail.body }}</td>
+          <button class="btn btn-danger" (click)="removeEmail(mail.id)">
+            <i class="material-icons">delete</i>
+          </button>
+          <button
+            class="btn btn-primary btn-md"
+            type="submit"
+            [routerLink]="['/mails', mail.id]"
+          >
+            <p>EmailViewer</p>
+            <i class="material-icons"> preview </i>
+          </button>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div *ngIf="!mailList || mailList.length === 0">
+    <h3>"The list of emails is empty"</h3>
+  </div>
+</div>

@@ -10,6 +10,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { FormFieldHighlightDirective } from './modules/directives/form-field-highlight.directive';
 import { WithBodyFilterPipe } from './pipes/with-body-filter.pipe';
 import { SearchFilterPipe } from './pipes/search-filter.pipe';
+import { EmailsListComponent } from './components/emails-list/emails-list.component';
+import { EmailsFormComponent } from './components/emails-form/emails-form.component';
+import { EmailsViewerComponent } from './components/emails-viewer/emails-viewer.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +22,9 @@ import { SearchFilterPipe } from './pipes/search-filter.pipe';
     FormFieldHighlightDirective,
     WithBodyFilterPipe,
     SearchFilterPipe,
+    EmailsListComponent,
+    EmailsFormComponent,
+    EmailsViewerComponent,
   ],
   imports: [BrowserModule, NgbModule, FormsModule, AppRoutingModule],
   providers: [],

@@ -61,8 +61,9 @@ export class EmailServiceService implements InMemoryDbService {
     return this.emailsList;
   }
 
-  getEmail(id: number): Email | undefined {
-    return this.emailsList.find((email) => email.id === id);
+  getMailById(id: number): Email {
+    const email = this.emailsList.find((email) => email.id === id);
+    return email || { id: 0, from: '', to: '', subject: '', body: '' }; // Provide a default email object
   }
 
   addEmail(email: Email): void {
