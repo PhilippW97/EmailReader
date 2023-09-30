@@ -44,7 +44,4 @@ export class EmailsListComponent implements OnInit {
   removeEmail(id: Number): void {
     this.mailList = this.emailService.deleteEmail(id);
   }
-  showMailViewer(): void {}
-
-  showMailForm(): void {}
 }

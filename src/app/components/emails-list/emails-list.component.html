@@ -39,11 +39,9 @@
     <table class="table">
       <thead>
         <tr>
-          <th>ID</th>
           <th>From</th>
           <th>To</th>
-          <th>Body</th>
-          <th>Delete</th>
+          <th>Subject</th>
         </tr>
       </thead>
       <tbody>
@@ -54,15 +52,14 @@
               | searchFilter : term
           "
         >
-          <td>{{ mail.id }}</td>
           <td>{{ mail.from }}</td>
           <td>{{ mail.to }}</td>
-          <td>{{ mail.body }}</td>
+          <td>{{ mail.subject }}</td>
           <button class="btn btn-danger" (click)="removeEmail(mail.id)">
             <i class="material-icons">delete</i>
           </button>
           <button
-            class="btn btn-primary btn-md"
+            class="btn btn-primary"
             type="submit"
             [routerLink]="['/mails', mail.id]"
           >

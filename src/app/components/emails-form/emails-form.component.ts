@@ -12,10 +12,6 @@ export class EmailsFormComponent implements OnInit {
   mailList!: Email[];
   uniqueIdCounter: number = 6;
 
-  // attributes for pipes
-  term!: string;
-  withBody!: boolean;
-
   @ViewChild('mailForm') mailForm: any;
 
   constructor(private emailService: EmailServiceService) {}
